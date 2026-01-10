@@ -22,18 +22,24 @@
  * - .impact-metrics: Quantitative metrics grid
  * - .back-link: Navigation back to projects list
  * 
+ * Note: SEO meta tags should be handled by the SEO component in each page
+ * using the "head" slot, not passed as props to this layout.
+ * 
  * @component
  * 
  * @example
  * ```astro
  * ---
  * import CaseStudyLayout from '../layouts/CaseStudyLayout.astro';
+ * import SEO from '../components/SEO.astro';
  * ---
  * 
- * <CaseStudyLayout 
- *   title="E-commerce Platform Redesign" 
- *   description="How we increased conversion by 45%"
- * >
+ * <CaseStudyLayout>
+ *   <SEO 
+ *     slot="head"
+ *     title="E-commerce Platform Redesign" 
+ *     description="How we increased conversion by 45%"
+ *   />
  *   <div class="case-study-header">
  *     <h1>E-commerce Platform Redesign</h1>
  *     <div class="case-study-meta">
@@ -62,19 +68,10 @@
  */
 
 import BaseLayout from './BaseLayout.astro';
-
-interface Props {
-  /** Case study title (used for page title and SEO) */
-  title: string;
-  
-  /** Optional case study description for meta tag */
-  description?: string;
-}
-
-const { title, description } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout>
+  <slot name="head" slot="head" />
   <div class="case-study-layout">
     <slot />
   </div>

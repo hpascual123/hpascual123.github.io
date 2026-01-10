@@ -2,12 +2,12 @@
 /**
  * BaseLayout
  * 
- * Foundation layout component that provides the core HTML structure, meta tags,
+ * Foundation layout component that provides the core HTML structure,
  * navigation, footer, and global styles for all pages. All other layouts extend
  * this base layout to ensure consistent site-wide structure.
  * 
  * Features:
- * - HTML document structure with proper meta tags
+ * - HTML document structure
  * - Favicon and manifest configuration
  * - Theme system with dark/light mode support
  * - Prevents flash of wrong theme on page load
@@ -16,18 +16,24 @@
  * - Global CSS imports (global, typography, utilities)
  * - Responsive layout structure
  * 
+ * Note: SEO meta tags (title, description, OG, Twitter) should be handled
+ * by the SEO component in each page, not in this layout.
+ * 
  * @component
  * 
  * @example
  * ```astro
  * ---
  * import BaseLayout from '../layouts/BaseLayout.astro';
+ * import SEO from '../components/SEO.astro';
  * ---
  * 
- * <BaseLayout 
- *   title="About Me" 
- *   description="Learn more about my background and experience"
- * >
+ * <BaseLayout>
+ *   <SEO 
+ *     slot="head"
+ *     title="About Me" 
+ *     description="Learn more about my background"
+ *   />
  *   <div>Page content goes here</div>
  * </BaseLayout>
  * ```
@@ -40,23 +46,6 @@ import { siteConfig } from '../config';
 import '../styles/global.css';
 import '../styles/typography.css';
 import '../styles/utilities.css';
-
-interface Props {
-  /** Page title (will be suffixed with author name) */
-  title: string;
-  
-  /** Optional page description for meta tag */
-  description?: string;
-}
-
-const { title, description } = Astro.props;
-
-/**
- * Generates the full site title with author name suffix
- * 
- * Format: "{title} | {author.name}" or falls back to siteConfig.title
- */
-const siteTitle = title ? `${title} | ${siteConfig.author.name}` : siteConfig.title;
 ---
 
 <!DOCTYPE html>
@@ -66,9 +55,8 @@ const siteTitle = title ? `${title} | ${siteConfig.author.name}` : siteConfig.ti
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     
-    {description && <meta name="description" content={description} />}
-    
-    <title>{siteTitle}</title>
+    <!-- SEO tags injected via slot -->
+    <slot name="head" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

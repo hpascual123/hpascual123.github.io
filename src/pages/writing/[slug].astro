@@ -101,11 +101,9 @@ function formatDate(date: Date): string {
 }
 ---
 
-<BaseLayout 
-  title={`${title} - Writing`}
-  description={description}
->
+<BaseLayout>
   <SEO 
+    slot="head"
     title={`${title} - Writing`}
     description={description}
     type="article"

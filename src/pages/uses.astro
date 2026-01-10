@@ -28,6 +28,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SEO from '../components/SEO.astro';
 import { getCollection } from 'astro:content';
+import { pagesConfig } from '../pages.config';
 
 /**
  * Queries all uses entries from the content collection
@@ -80,21 +81,19 @@ const categoryInfo = {
 const categoryOrder: Array<'tools' | 'stack' | 'environment'> = ['tools', 'stack', 'environment'];
 ---
 
-<BaseLayout 
-  title="Uses - Tools, Stack & Environment" 
-  description="A comprehensive list of the tools, technologies, and environment I use for development work."
->
+<BaseLayout>
   <SEO 
-    title="Uses - Tools, Stack & Environment"
-    description="A comprehensive list of the tools, technologies, and environment I use for development work."
+    slot="head"
+    title={pagesConfig.uses.title}
+    description={pagesConfig.uses.description}
     type="website"
   />
 
   <main class="page-container">
     <header class="page-header">
-      <h1 class="page-title">Uses</h1>
+      <h1 class="page-title">{pagesConfig.uses.heading}</h1>
       <p class="page-intro">
-        A transparent look at the tools, technologies, and environment that power my development workflow. This page documents what I use and why, helping other engineers discover useful tools and understand my technical context.
+        {pagesConfig.uses.intro}
       </p>
     </header>
 

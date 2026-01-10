@@ -32,6 +32,7 @@ import SEO from '../components/SEO.astro';
 import TalkCard from '../components/TalkCard.astro';
 import PageStats from '../components/PageStats.astro';
 import { getCollection } from 'astro:content';
+import { pagesConfig } from '../pages.config';
 
 /**
  * Queries all speaking entries from the content collection
@@ -86,21 +87,19 @@ const totalTalks = sortedTalks.length;
 const conferenceCount = sortedTalks.filter(t => t.data.type === 'conference').length;
 ---
 
-<BaseLayout 
-  title="Speaking - Talks & Presentations" 
-  description="Conference talks, meetup presentations, podcast appearances, and workshops on software engineering, architecture, and technical leadership."
->
+<BaseLayout>
   <SEO 
-    title="Speaking - Talks & Presentations"
-    description="Conference talks, meetup presentations, podcast appearances, and workshops on software engineering, architecture, and technical leadership."
+    slot="head"
+    title={pagesConfig.speaking.title}
+    description={pagesConfig.speaking.description}
     type="website"
   />
 
   <main class="page-container">
     <header class="page-header">
-      <h1 class="page-title">Speaking</h1>
+      <h1 class="page-title">{pagesConfig.speaking.heading}</h1>
       <p class="page-intro">
-        I regularly speak at conferences, meetups, and on podcasts about software architecture, engineering practices, and technical leadership. Here's a collection of my talks and presentations.
+        {pagesConfig.speaking.intro}
       </p>
       <PageStats text={`${totalTalks} talks · ${conferenceCount} conferences`} />
     </header>

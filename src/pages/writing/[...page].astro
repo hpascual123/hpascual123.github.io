@@ -29,6 +29,7 @@ import Pagination from '../../components/Pagination.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import PageStats from '../../components/PageStats.astro';
 import { getCollection } from 'astro:content';
+import { pagesConfig } from '../../pages.config';
 import type { GetStaticPaths } from 'astro';
 
 /**
@@ -94,25 +95,23 @@ const postsPerPage = 5;
  * Page 1 shows the main title, subsequent pages include page number.
  */
 const pageTitle = currentPage === 1 
-  ? "Writing - Technical Articles & Insights"
-  : `Writing - Page ${currentPage}`;
+  ? pagesConfig.writing.title
+  : `${pagesConfig.writing.title} - Page ${currentPage}`;
 ---
 
-<BaseLayout 
-  title={pageTitle}
-  description="Technical articles, insights, and lessons learned from building software systems and solving engineering challenges."
->
+<BaseLayout>
   <SEO 
+    slot="head"
     title={pageTitle}
-    description="Technical articles, insights, and lessons learned from building software systems and solving engineering challenges."
+    description={pagesConfig.writing.description}
     type="website"
   />
 
   <main class="page-container">
     <header class="page-header">
-      <h1 class="page-title">Writing</h1>
+      <h1 class="page-title">{pagesConfig.writing.heading}</h1>
       <p class="page-intro">
-        Technical articles, insights, and lessons learned from building software systems. I write about architecture decisions, engineering practices, and the challenges of delivering reliable software at scale.
+        {pagesConfig.writing.intro}
       </p>
       <PageStats text={totalPages > 1 
         ? `Showing ${(currentPage - 1) * postsPerPage + 1}–${Math.min(currentPage * postsPerPage, totalArticles)} of ${totalArticles} articles`

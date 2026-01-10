@@ -73,14 +73,13 @@ const recentDecisions = allDecisions
   .slice(0, 2);
 ---
 
-<BaseLayout 
-  title={siteConfig.title}
-  description={siteConfig.description}
->
+<BaseLayout>
   <SEO 
+    slot="head"
     title={`${siteConfig.author.name} - ${siteConfig.author.title}`}
     description={siteConfig.description}
     type="website"
+    noSuffix
   />
 
   <!-- Structured Data for Homepage -->

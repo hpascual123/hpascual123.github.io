@@ -34,6 +34,7 @@ import { glob } from 'astro/loaders';
  * - Impact metrics (quantitative and qualitative)
  * - Featured flag for homepage showcase
  * - Optional custom order for manual curation
+ * - Related project and decision slugs for cross-referencing
  */
 const projectsCollection = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
@@ -46,6 +47,12 @@ const projectsCollection = defineCollection({
     
     /** Year the project was completed */
     year: z.number(),
+    
+    /** Project duration (e.g., "3 months", "1.5 years") */
+    duration: z.string().optional(),
+    
+    /** Team size for scope context */
+    teamSize: z.number().optional(),
     
     /** Brief summary of outcomes and impact */
     outcomeSummary: z.string(),
@@ -89,8 +96,17 @@ const projectsCollection = defineCollection({
     /** Whether to feature on homepage */
     featured: z.boolean().default(false),
     
+    /** Project status */
+    status: z.enum(['completed', 'ongoing', 'archived']).default('completed'),
+    
     /** Custom sort order (lower numbers first) */
     order: z.number().optional(),
+    
+    /** Related project slugs for cross-referencing */
+    relatedProjects: z.array(z.string()).optional(),
+    
+    /** Related decision slugs for cross-referencing */
+    relatedDecisions: z.array(z.string()).optional(),
   }),
 });
 
@@ -105,6 +121,7 @@ const projectsCollection = defineCollection({
  * - Alternatives with pros/cons analysis
  * - Reasoning explanation
  * - Optional tags for categorization
+ * - Related project and decision slugs for cross-referencing
  */
 const decisionsCollection = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/decisions' }),
@@ -133,6 +150,12 @@ const decisionsCollection = defineCollection({
     
     /** Optional tags for categorization */
     tags: z.array(z.string()).optional(),
+    
+    /** Related project slugs for cross-referencing */
+    relatedProjects: z.array(z.string()).optional(),
+    
+    /** Related decision slugs for cross-referencing */
+    relatedDecisions: z.array(z.string()).optional(),
   }),
 });
 

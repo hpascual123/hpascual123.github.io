@@ -83,7 +83,6 @@ export default defineConfig({
    * - Site: URL, language, title, description
    * - Author: Name, title, bio, email, location
    * - Social: GitHub, LinkedIn, Twitter, Mastodon, Bluesky
-   * - Analytics: Plausible, Fathom, Google Analytics
    */
   env: {
     schema: {
@@ -106,11 +105,6 @@ export default defineConfig({
       SOCIAL_TWITTER: envField.string({ context: 'client', access: 'public', default: '' }),
       SOCIAL_MASTODON: envField.string({ context: 'client', access: 'public', default: '' }),
       SOCIAL_BLUESKY: envField.string({ context: 'client', access: 'public', default: '' }),
-      
-      // Analytics configuration (empty string = disabled)
-      ANALYTICS_PLAUSIBLE_DOMAIN: envField.string({ context: 'client', access: 'public', default: '' }),
-      ANALYTICS_FATHOM_SITE_ID: envField.string({ context: 'client', access: 'public', default: '' }),
-      ANALYTICS_GA_ID: envField.string({ context: 'client', access: 'public', default: '' }),
     },
   },
   

@@ -24,6 +24,7 @@
  * - Structured data for SEO
  * - Optional additional markdown content
  * - Scroll-to-top functionality
+ * - Related content navigation
  * - Back navigation to projects list
  * 
  * Route: /projects/[slug]
@@ -36,6 +37,8 @@ import SEO from '../../components/SEO.astro';
 import StructuredData from '../../components/StructuredData.astro';
 import ScrollToTop from '../../components/ScrollToTop.astro';
 import BackLink from '../../components/BackLink.astro';
+import RelatedContent from '../../components/RelatedContent.astro';
+import ImpactMetrics from '../../components/ImpactMetrics.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import { calculateReadingTime, formatReadingTime } from '../../utils/readingTime';
 
@@ -74,6 +77,8 @@ const {
   title,
   role,
   year,
+  duration,
+  teamSize,
   outcomeSummary,
   overview,
   problem,
@@ -83,7 +88,18 @@ const {
   techStack,
   impact,
   learnings,
+  relatedProjects,
+  relatedDecisions,
+  status,
 } = project.data;
+
+// Status display configuration
+const statusConfig = {
+  completed: { label: 'Completed', class: 'status--completed' },
+  ongoing: { label: 'Ongoing', class: 'status--ongoing' },
+  archived: { label: 'Archived', class: 'status--archived' },
+};
+const statusInfo = statusConfig[status || 'completed'];
 
 /**
  * Calculates reading time from all case study content
@@ -104,11 +120,9 @@ const allText = [
 const readingTime = formatReadingTime(calculateReadingTime(allText));
 ---
 
-<BaseLayout 
-  title={`${title} - Case Study`}
-  description={outcomeSummary}
->
+<BaseLayout>
   <SEO 
+    slot="head"
     title={`${title} - Case Study`}
     description={outcomeSummary}
     type="article"
@@ -129,11 +143,30 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
   <main class="case-study">
     <!-- Case Study Header -->
     <header class="case-study-header">
+      <div class="header-badges">
+        {status && status !== 'completed' && (
+          <span class:list={['status-badge', statusInfo.class]}>
+            {statusInfo.label}
+          </span>
+        )}
+      </div>
       <h1>{title}</h1>
       <div class="case-study-meta">
         <span class="meta-item">{role}</span>
         <span class="meta-separator">·</span>
         <span class="meta-item">{year}</span>
+        {duration && (
+          <>
+            <span class="meta-separator">·</span>
+            <span class="meta-item">{duration}</span>
+          </>
+        )}
+        {teamSize && (
+          <>
+            <span class="meta-separator">·</span>
+            <span class="meta-item">{teamSize} {teamSize === 1 ? 'person' : 'people'}</span>
+          </>
+        )}
         <span class="meta-separator">·</span>
         <span class="meta-item">{readingTime}</span>
       </div>
@@ -208,16 +241,9 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
     <section class="case-study-section">
       <h2>Result & Impact</h2>
       
-      {/* Conditionally display metrics if present (Requirement 4.5) */}
+      {/* Display metrics with visualization */}
       {impact.metrics && impact.metrics.length > 0 && (
-        <div class="impact-metrics">
-          {impact.metrics.map((metric) => (
-            <div class="metric-item">
-              <div class="metric-value">{metric.value}</div>
-              <div class="metric-label">{metric.label}</div>
-            </div>
-          ))}
-        </div>
+        <ImpactMetrics metrics={impact.metrics} />
       )}
       
       <p class="impact-qualitative">{impact.qualitative}</p>
@@ -240,6 +266,12 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
       </section>
     )}
 
+    <!-- Related Content -->
+    <RelatedContent 
+      relatedProjects={relatedProjects} 
+      relatedDecisions={relatedDecisions} 
+    />
+
     <BackLink href="/projects" text="All projects" />
   </main>
 
@@ -256,6 +288,35 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
       margin-bottom: 3rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid var(--color-border);
+    }
+
+    .header-badges {
+      margin-bottom: 0.75rem;
+    }
+
+    .header-badges:empty {
+      display: none;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.625rem;
+      border-radius: 4px;
+    }
+
+    .status--ongoing {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    .status--archived {
+      background: rgba(115, 115, 115, 0.15);
+      color: var(--color-text-muted);
     }
 
     .case-study-header h1 {
@@ -392,38 +453,6 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
       color: var(--color-accent);
     }
 
-    .impact-metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-      padding: 2rem;
-      background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-    }
-
-    .metric-item {
-      text-align: left;
-    }
-
-    .metric-value {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--color-text);
-      margin-bottom: 0.375rem;
-      line-height: 1.4;
-    }
-
-    .metric-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-text-muted);
-      line-height: 1.4;
-    }
-
     .impact-qualitative {
       font-size: 1.125rem;
       line-height: 1.7;
@@ -460,11 +489,6 @@ const readingTime = formatReadingTime(calculateReadingTime(allText));
 
       .decision-item {
         padding: 1.25rem;
-      }
-
-      .impact-metrics {
-        grid-template-columns: 1fr;
-        padding: 1.5rem;
       }
     }
   </style>

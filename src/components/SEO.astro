@@ -3,25 +3,55 @@
  * SEO Component
  * 
  * Generates comprehensive meta tags for SEO, Open Graph, and Twitter Cards.
- * Uses centralized configuration from src/config.ts
+ * Should be placed in the "head" slot of BaseLayout.
  * 
- * @param title - Page title
- * @param description - Page description
- * @param type - Page type (website, article, profile)
- * @param image - Social sharing image URL
- * @param publishDate - Article publish date (for articles)
- * @param updatedDate - Article updated date (for articles)
- * @param canonicalURL - Canonical URL for the page
+ * Features:
+ * - Page title with site name suffix
+ * - Meta description
+ * - Canonical URL
+ * - Open Graph tags for social sharing
+ * - Twitter Card tags
+ * - Article-specific metadata (publish/update dates)
+ * 
+ * @component
+ * 
+ * @example
+ * ```astro
+ * <BaseLayout>
+ *   <SEO 
+ *     slot="head"
+ *     title="About Me" 
+ *     description="Learn more about my background"
+ *   />
+ *   <div>Content</div>
+ * </BaseLayout>
+ * ```
  */
 import { siteConfig } from '../config';
 
 interface Props {
+  /** Page title (will be suffixed with author name unless noSuffix is true) */
   title: string;
+  
+  /** Page description for meta tags */
   description?: string;
+  
+  /** Skip adding site name suffix to title (useful for homepage) */
+  noSuffix?: boolean;
+  
+  /** Page type for Open Graph */
   type?: 'website' | 'article' | 'profile';
+  
+  /** Social sharing image URL */
   image?: string;
+  
+  /** Article publish date (for articles) */
   publishDate?: Date;
+  
+  /** Article updated date (for articles) */
   updatedDate?: Date;
+  
+  /** Canonical URL override */
   canonicalURL?: string;
 }
 
@@ -33,7 +63,11 @@ const {
   publishDate,
   updatedDate,
   canonicalURL,
+  noSuffix = false,
 } = Astro.props;
+
+// Generate full title with site name suffix (unless noSuffix is true)
+const fullTitle = noSuffix ? title : (title ? `${title} | ${siteConfig.author.name}` : siteConfig.title);
 
 // Get the current URL from Astro
 const currentURL = canonicalURL || Astro.url.href;
@@ -54,14 +88,17 @@ const twitterHandle = siteConfig.social.twitter
   : undefined;
 ---
 
-<!-- Standard Meta Tags -->
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Page Title -->
+<title>{fullTitle}</title>
+
+<!-- Meta Description -->
 <meta name="description" content={description} />
-<meta name="generator" content={Astro.generator} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={currentURL} />
+
+<!-- Author -->
+<meta name="author" content={siteConfig.author.name} />
 
 <!-- Open Graph Tags -->
 <meta property="og:type" content={type} />
@@ -89,9 +126,3 @@ const twitterHandle = siteConfig.social.twitter
 <meta name="twitter:image" content={absoluteImageURL} />
 {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
 {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
-
-<!-- Author -->
-<meta name="author" content={siteConfig.author.name} />
-
-<!-- Page Title -->
-<title>{title}</title>

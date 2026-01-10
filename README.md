@@ -34,64 +34,36 @@ This lets you demonstrate not just what you built, but how you think. Hiring man
 
 ## Features
 
-### Case Studies, Not Screenshots
+### Case Studies Over Screenshots
 
-A structured narrative format that showcases your engineering thinking, not just the final product.
+Document your engineering thinking with structured project narratives.
 
-- **Structured storytelling**: Problem → Constraints → Approach → Decisions → Impact → Learnings
-- **Key decisions with reasoning**: Document trade-offs and alternatives considered
-- **Quantifiable impact**: Metrics and qualitative outcomes in every case study
-- **Featured projects**: Highlight your best work on the homepage
+- **Problem → Solution framework**: Context, constraints, approach, and measurable impact
+- **Decision documentation**: Trade-offs, alternatives, and reasoning behind key choices
+- **Quantified outcomes**: Performance improvements, team impact, and business results
+- **Strategic highlighting**: Feature your strongest work on the homepage
 
-### Decision Documentation
+### Built-in Decision Records
 
-Built-in decision log for architectural and technical decisions (ADRs).
+Document architectural decisions with full context and alternatives.
 
-- Context and background for each decision
-- Alternatives with pros/cons analysis
-- Reasoning and outcome documentation
-- Tag-based categorization
+- Problem statement and background context
+- Options considered with trade-off analysis
+- Chosen approach with reasoning
+- Outcomes and learnings
+- Tag-based organization and filtering
 
-### Professional Content Collections
+### Content Types for Technical Portfolios
 
-Multiple content types designed for engineering portfolios.
+Purpose-built collections for engineering professionals.
 
-- **Projects**: Case studies with structured narrative format
-- **Decisions**: Technical decision records with alternatives analysis
-- **Journey**: Career timeline with milestones, learnings, and transitions
-- **Writing**: Blog posts with auto-generated table of contents
-- **Speaking**: Conference talks, podcasts, and workshops
-- **Uses**: Tools, tech stack, and development environment
-- **Testimonials**: Colleague and client recommendations
-
-### Performance & SEO
-
-Static site generation with modern optimizations.
-
-- Zero JavaScript by default — minimal JS only where needed
-- Automatic image optimization with Sharp
-- SEO-ready with Open Graph, Twitter Cards, and JSON-LD structured data
-- Auto-generated sitemap for search engines
-- Strong Lighthouse performance with sensible defaults
-
-### Developer Experience
-
-Clean codebase with sensible defaults.
-
-- **Astro 5** with View Transitions for smooth navigation
-- **TypeScript** with strict type checking
-- **Zod schemas** for content validation
-- **Modern CSS** with custom properties — framework-agnostic, long-term maintainable
-- **Environment-based config** — customize via `.env` file
-
-### Theming & Customization
-
-Fully customizable without touching the core code.
-
-- Light/dark mode with system preference detection
-- CSS custom properties for colors, typography, and spacing
-- Configurable navigation and social links
-- Analytics ready (Plausible, Fathom, Google Analytics)
+- **Projects** — Deep-dive case studies with structured narratives
+- **Decisions** — ADR-style technical decision logs
+- **Journey** — Career milestones, transitions, and key learnings
+- **Writing** — Technical articles with auto-generated TOC
+- **Speaking** — Talks, podcasts, and workshop materials
+- **Tools** — Tech stack and development environment
+- **Testimonials** — Peer and client recommendations
 
 ## Quick Start
 
@@ -120,12 +92,31 @@ Your site is now running at [http://localhost:4321](http://localhost:4321)
 
 Full documentation is available in the [`docs/`](./docs/) folder:
 
-- [Getting Started](./docs/getting-started.md) — Installation, setup, and project structure
-- [Configuration](./docs/configuration.md) — Environment variables and site settings
-- [Content Guide](./docs/content-guide.md) — Adding projects, decisions, articles, and more
-- [Customization](./docs/customization.md) — Styling, colors, typography, and layouts
-- [Deployment](./docs/deployment.md) — Deploy to Netlify, Vercel, GitHub Pages, and more
-- [Troubleshooting](./docs/troubleshooting.md) — Common issues and solutions
+### Getting Started
+- [Installation](./docs/01-getting-started/installation.md) — Prerequisites and setup
+- [Quick Start](./docs/01-getting-started/quick-start.md) — See results in 5 minutes
+- [Project Structure](./docs/01-getting-started/project-structure.md) — Understand the codebase
+
+### Configuration
+- [Configuration](./docs/02-configuration/configuration.md) — Environment variables, navigation, favicons
+
+### Content
+- [Content Guide](./docs/03-content/content-guide.md) — All content types and schemas
+- [Templates](./docs/03-content/templates.md) — Copy-paste templates for quick content creation
+- [Images](./docs/03-content/images.md) — Image handling and optimization
+- [Content Strategy](./docs/03-content/content-strategy.md) — Best practices for featured content
+
+### Customization
+- [Styling](./docs/04-customization/styling.md) — Colors, typography, spacing, breakpoints
+- [Components](./docs/04-customization/components.md) — Modifying and creating components
+- [Advanced](./docs/04-customization/advanced.md) — Layouts, new content collections
+
+### Deployment
+- [Deployment](./docs/05-deployment/deployment.md) — Build and deploy to various platforms
+- [Post-Deployment](./docs/05-deployment/post-deployment.md) — Verification checklist
+
+### Reference
+- [Troubleshooting](./docs/06-reference/troubleshooting.md) — Common issues and solutions
 
 ## License
 

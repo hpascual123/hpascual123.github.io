@@ -24,6 +24,7 @@ import SEO from '../../components/SEO.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import PageStats from '../../components/PageStats.astro';
 import { getCollection } from 'astro:content';
+import { pagesConfig } from '../../pages.config';
 
 /**
  * Queries all projects from the content collection
@@ -64,21 +65,19 @@ const totalProjects = sortedProjects.length;
 const featuredCount = sortedProjects.filter(p => p.data.featured).length;
 ---
 
-<BaseLayout 
-  title="Projects - Case Studies" 
-  description="Detailed case studies showcasing problem-solving approach, technical decisions, and measurable impact across various engineering projects."
->
+<BaseLayout>
   <SEO 
-    title="Projects - Case Studies & Engineering Work"
-    description="Detailed case studies showcasing problem-solving approach, technical decisions, and measurable impact across various engineering projects."
+    slot="head"
+    title={pagesConfig.projects.title}
+    description={pagesConfig.projects.description}
     type="website"
   />
 
   <main class="page-container">
     <header class="page-header">
-      <h1 class="page-title">Projects</h1>
+      <h1 class="page-title">{pagesConfig.projects.heading}</h1>
       <p class="page-intro">
-        Case studies that demonstrate how I approach complex problems, make technical decisions, and deliver measurable impact. Each project tells the story of the challenge, the constraints, the decisions made, and the outcomes achieved.
+        {pagesConfig.projects.intro}
       </p>
       <PageStats text={`${totalProjects} projects · ${featuredCount} featured`} />
     </header>
@@ -94,6 +93,7 @@ const featuredCount = sortedProjects.filter(p => p.data.featured).length;
             year={project.data.year}
             techStack={project.data.techStack}
             featured={project.data.featured}
+            status={project.data.status}
           />
         ))}
       </div>

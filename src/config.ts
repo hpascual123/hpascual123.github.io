@@ -14,7 +14,6 @@
  * - Site metadata (URL, language, title, description)
  * - Author information (name, title, bio, email, location)
  * - Social links (GitHub, LinkedIn, Twitter, Mastodon, Bluesky)
- * - Analytics (Plausible, Fathom, Google Analytics)
  * - Navigation structure
  * 
  * @module config
@@ -117,23 +116,6 @@ export const siteConfig = {
     
     /** Bluesky profile URL */
     bluesky: getEnv('SOCIAL_BLUESKY', ''),
-  },
-  
-  /**
-   * Analytics configuration
-   * 
-   * Configure one or more analytics services. Set to empty string to disable.
-   * Only services with configured IDs/domains will be activated.
-   */
-  analytics: {
-    /** Plausible Analytics domain */
-    plausibleDomain: getEnv('ANALYTICS_PLAUSIBLE_DOMAIN', ''),
-    
-    /** Fathom Analytics site ID */
-    fathomSiteId: getEnv('ANALYTICS_FATHOM_SITE_ID', ''),
-    
-    /** Google Analytics measurement ID */
-    googleAnalyticsId: getEnv('ANALYTICS_GA_ID', ''),
   },
   
   /**

@@ -24,6 +24,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SEO from '../components/SEO.astro';
 import { siteConfig } from '../config';
+import { pagesConfig } from '../pages.config';
 
 /**
  * Filters and formats social links from site configuration
@@ -41,20 +42,18 @@ const socialLinks = Object.entries(siteConfig.social)
   }));
 ---
 
-<BaseLayout 
-  title="Contact" 
-  description="Get in touch to discuss opportunities, collaborations, or technical challenges."
->
+<BaseLayout>
   <SEO 
-    title="Contact - Get in Touch"
-    description="Get in touch to discuss opportunities, collaborations, or technical challenges."
+    slot="head"
+    title={pagesConfig.contact.title}
+    description={pagesConfig.contact.description}
     type="website"
   />
 
   <main class="contact-page">
     <!-- Zone 1: Primary Intent -->
     <section class="primary-zone">
-      <h1>Let's Talk</h1>
+      <h1>{pagesConfig.contact.heading}</h1>
       <a href={`mailto:${siteConfig.author.email}`} class="email-link">
         {siteConfig.author.email}
       </a>

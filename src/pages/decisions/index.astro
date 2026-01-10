@@ -24,6 +24,7 @@ import SEO from '../../components/SEO.astro';
 import DecisionCard from '../../components/DecisionCard.astro';
 import PageStats from '../../components/PageStats.astro';
 import { getCollection } from 'astro:content';
+import { pagesConfig } from '../../pages.config';
 
 /**
  * Queries all decisions from the content collection
@@ -46,21 +47,19 @@ const sortedDecisions = allDecisions.sort((a, b) => {
 const totalDecisions = sortedDecisions.length;
 ---
 
-<BaseLayout 
-  title="Decisions - Architectural & Technical Choices" 
-  description="A log of architectural and technical decisions, documenting the context, alternatives considered, and reasoning behind key engineering choices."
->
+<BaseLayout>
   <SEO 
-    title="Decisions - Architectural & Technical Choices"
-    description="A log of architectural and technical decisions, documenting the context, alternatives considered, and reasoning behind key engineering choices."
+    slot="head"
+    title={pagesConfig.decisions.title}
+    description={pagesConfig.decisions.description}
     type="website"
   />
 
   <main class="page-container">
     <header class="page-header">
-      <h1 class="page-title">Decisions</h1>
+      <h1 class="page-title">{pagesConfig.decisions.heading}</h1>
       <p class="page-intro">
-        A transparent log of architectural and technical decisions I've made throughout my career. Each entry documents the context, alternatives considered, and the reasoning behind the choice.
+        {pagesConfig.decisions.intro}
       </p>
       <PageStats text={`${totalDecisions} decisions documented`} />
     </header>
